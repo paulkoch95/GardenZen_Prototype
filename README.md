@@ -1,4 +1,4 @@
-![logo](https://github.com/paulkoch95/GardenZen_Prototype/blob/master/assets/splash_image.png?raw=true)
+![logo](https://github.com/paulkoch95/GardenZen_Prototype/blob/master/assets/splash_image.png?raw=true|width=512)
 # GardenZen Prototype 2.5D Game
 Relaxing 2.5D Game about gardening a small farm and growing food, plants and other things.
 This project is intended to show the capabilities of a small and limited performance engine like pygame. 
