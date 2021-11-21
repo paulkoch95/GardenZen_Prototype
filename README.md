@@ -6,7 +6,7 @@ I will try to show tips and implementation details to improve your own pygame ga
 
 If you have questions ore remarks reach out to me via github or E-Mail (paulkoch95@gmail.com)
 
-##Features of the game and implementation details
+## Features of the game and implementation details
 + made using Python 3.9XX
 + graphics library is SDL2 based pygame2
 + all graphics are handmade
