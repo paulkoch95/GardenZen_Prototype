@@ -4,6 +4,7 @@ from assets import colors
 from ui.label import  Label
 from game.level import Level
 from game.tilemap import Tilemap
+from debug import tools
 import numpy as np
 pygame.init()
 
@@ -29,12 +30,14 @@ class GameScreen(Scene):
         self.grass = self.tilemap.grass_tile
         self.green = self.tilemap.green_tile
 
-        # create map //TODO replace by map gen
-        self.create_array()
-
         # where mapo drawing should start, //TODO replace by camera
         self.map_offset_x = 0
         self.map_offset_y = 0
+
+        self.drawing_offset_x = 5*TILE_W
+        self.drawing_offset_y = 0
+        # create map //TODO replace by map gen
+        self.create_array()
 
         #text display for debugging
         self.title_label =Label(pygame.display.get_surface(),'Game Scene',45,colors.WHITE,(0,0),(0,0))
@@ -63,10 +66,12 @@ class GameScreen(Scene):
         else:
             self.level_obj.set_level_data(1, 2, 0)
             self.create_array()
+
+        # test 123
         debug_string = f'Mouse Position Screen: {str(pygame.mouse.get_pos())} | Scrollfactors: {self.w,self.h}'
 
-        trans_matrix = np.matrix([[16, 32, -((self.map_offset_x+32+(5*TILE_W)) *16) - ((self.map_offset_y)*32)],
-                                  [-16, 32, ((self.map_offset_x+32+(5*TILE_W)) * 16) -((self.map_offset_y)*32)],
+        trans_matrix = np.matrix([[16, 32, -((self.map_offset_x+32+self.drawing_offset_x) *16) - ((self.map_offset_y)*32)],
+                                  [-16, 32, ((self.map_offset_x+32+self.drawing_offset_x) * 16) -((self.map_offset_y)*32)],
                                   [0, 0, 1024]])
 
         tile_pos = (1 / 1024) * trans_matrix * np.matrix([[pygame.mouse.get_pos()[0]], [pygame.mouse.get_pos()[1]], [1]])
@@ -81,13 +86,13 @@ class GameScreen(Scene):
         self.font = pygame.font.Font(None, 15)
         text_surface = self.font.render('test', True, colors.RED)
 
-        for x in range(len(self.level[0])):
+        for x in range(len(self.level[0])-1,-1,-1):
             for y in range(len(self.level)):
 
                 if self.level[x][y]==1:
                     text_surface = self.font.render(f'{x,y}', True, colors.RED)
-                    self.test_surface.blit(self.grass,((5*TILE_W)+(x-y)*(TILE_W/2),(x+y)*TILE_H/2))
-                    self.test_surface.blit(text_surface, ((5*TILE_W)+(x-y)*(TILE_W/2)+(0.5*TILE_W),((x+y)*TILE_H/2)+(0.5*TILE_H)))
+                    self.test_surface.blit(self.grass,(self.drawing_offset_x+(x-y)*(TILE_W/2),(x+y)*TILE_H/2))
+                    self.test_surface.blit(text_surface, (self.drawing_offset_x+(x-y)*(TILE_W/2)+(0.5*TILE_W),((x+y)*TILE_H/2)+(0.5*TILE_H)))
                 else:
                     self.test_surface.blit(self.green,((5*TILE_W)+(x-y)*(TILE_W/2),(x+y)*TILE_H/2))
 
@@ -95,6 +100,7 @@ class GameScreen(Scene):
         screen.fill(colors.CORNFLOWER_BLUE)
         #test_surface_scaled = pygame.transform.scale(self.test_surface,(self.w,self.h))
         screen.blit(self.test_surface,(self.map_offset_x,self.map_offset_y))
+        #tools.draw_hitbox(pygame.display.get_surface(), self.test_surface,self.title_label.surface)
         # screen.blit(self.test_surface,(0,0))
         self.title_label.draw()
         self.debug_label.draw()
