@@ -27,7 +27,8 @@ class GameScreen(Scene):
 
         # tilemap giving image of the tile to be rendered
         self.tilemap = Tilemap()
-        self.grass = self.tilemap.grass_tile
+        # self.grass = self.tilemap.grass_tile
+        self.grass = self.tilemap.green_textured
         self.green = self.tilemap.green_tile
 
         # where mapo drawing should start, //TODO replace by camera
@@ -98,9 +99,10 @@ class GameScreen(Scene):
 
     def render(self, screen: pygame.surface):
         screen.fill(colors.CORNFLOWER_BLUE)
-        #test_surface_scaled = pygame.transform.scale(self.test_surface,(self.w,self.h))
+        # test_surface_scaled = pygame.transform.scale(self.test_surface,(self.w,self.h))
         screen.blit(self.test_surface,(self.map_offset_x,self.map_offset_y))
-        #tools.draw_hitbox(pygame.display.get_surface(), self.test_surface,self.title_label.surface)
+        # screen.blit(self.test_surface_scaled,(self.map_offset_x,self.map_offset_y))
+        # tools.draw_hitbox(pygame.display.get_surface(), self.test_surface,self.title_label.surface)
         # screen.blit(self.test_surface,(0,0))
         self.title_label.draw()
         self.debug_label.draw()

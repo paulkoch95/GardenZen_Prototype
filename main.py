@@ -3,7 +3,7 @@ import sys
 import pygame
 # own imports
 from scenes import scene, menu_scene,title_scene
-
+from sound import sound_engine
 __version__ = "alpha - 0.01"
 
 
@@ -11,6 +11,11 @@ __version__ = "alpha - 0.01"
 def game(width, height, init_scene: scene.Scene, fps_cap):
 
     pygame.init()
+
+    music = sound_engine.Engine()
+    music.load("sound/classic.mp3")
+    music.playback(0.5)
+
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(f'Garden Zen Prototype {__version__}')
 
