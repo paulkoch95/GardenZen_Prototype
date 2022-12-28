@@ -13,8 +13,8 @@ def game(width, height, init_scene: scene.Scene, fps_cap):
     pygame.init()
 
     music = sound_engine.Engine()
-    music.load("sound/classic.mp3")
-    music.playback(0.5)
+    # music.load("sound/classic.mp3")
+    # music.playback(0.5)
 
     screen = pygame.display.set_mode((width, height))
     pygame.display.set_caption(f'Garden Zen Prototype {__version__}')
@@ -43,8 +43,8 @@ def game(width, height, init_scene: scene.Scene, fps_cap):
                 filtered_events.append(event)
 
         active_scene.input(filtered_events)
-        active_scene.render(screen)
         active_scene.update()
+        active_scene.render(screen)
         active_scene = active_scene.next
         fps = font.render(str(int(clock.get_fps())), True, pygame.Color('white'))
         screen.blit(fps, (50, 50))

@@ -1,5 +1,6 @@
 import pygame.image
 import pygame
+from assets.colors import RED
 pygame.init()
 
 class Tilemap:
@@ -16,3 +17,5 @@ class Tilemap:
         self.green_textured = pygame.Surface((64,32), pygame.SRCALPHA)
         self.green_textured.blit(self.tilemap,(0,0), (64+64,0,64,32))
 
+        self.red_texture = pygame.Surface((64,32), pygame.SRCALPHA)
+        pygame.draw.rect(self.red_texture,RED,(0,0,30,30))

@@ -18,6 +18,6 @@ class OptionsScreen(Scene):
         print("Input overwritten in Debug Scene!")
 
     def render(self, screen: pygame.surface):
-        debug_text = self.font.render(str(f"Option Screen scene"),True, colors.RED)
+        debug_text = self.font.render(str(f"Option Screen scene"), True, colors.RED)
         screen.fill(colors.BLACK)
         screen.blit(debug_text,(50,80))
