@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-from assets import colors
+from assets import ressources
 from ui import ui_component
 
 class Label(ui_component.UIComponent):
@@ -21,7 +21,7 @@ class Label(ui_component.UIComponent):
         self.background_rect = pygame.Rect(pos,dim)
 
         # color speci for button
-        self.normal_color = colors.WHITE
+        self.normal_color = ressources.COLORS.WHITE
         self.color = self.normal_color
 
         # representation of text rendering to be displayed on top of button

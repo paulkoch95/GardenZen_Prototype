@@ -1,11 +1,11 @@
 import pygame
 pygame.init()
-from assets import colors
+from assets.ressources import FONT, COLORS
 from ui import ui_component
 
 class Button(ui_component.UIComponent):
 
-    def __init__(self, surface: pygame.surface, text,pos, dim, connect=None):
+    def __init__(self, surface: pygame.surface, text, pos, dim, connect=None):
         ui_component.UIComponent.__init__(self)
         # own render context
         self.surface = surface
@@ -20,18 +20,17 @@ class Button(ui_component.UIComponent):
         self.button_rect = pygame.Rect(pos,dim)
 
         # color speci for button
-        self.hover_color = colors.RED
-        self.normal_color = colors.WHITE
+        self.hover_color = COLORS.RED
+        self.normal_color = COLORS.WHITE
         self.color = self.normal_color
 
         # if true, mouse is on nutton and left mousebutton is pressed down
         self.pressed = False
 
         # representation of text rendering to be displayed on top of button
-        self.font = pygame.font.Font(None, 30)
-        self.text_surface = self.font.render(self.text,True, colors.BLACK)
-        if self.text_surface.get_width() < self.dim[0]:
-            self.button_rect.width = self.button_rect.width+self.text_surface.get_width()
+        self.font = FONT.pixel_font(60)
+        self.button_rect.width = self.font.size(self.text)[0]
+        self.text_surface = self.font.render(self.text,True, COLORS.BLACK)
 
     def draw(self):
         """
@@ -39,7 +38,7 @@ class Button(ui_component.UIComponent):
         :return:
         """
         pygame.draw.rect(self.surface,self.color, self.button_rect)
-        self.surface.blit(self.text_surface,(self.button_rect.center))
+        self.surface.blit(self.text_surface,(self.button_rect.topleft))
 
     def check_click(self):
         """
@@ -52,14 +51,9 @@ class Button(ui_component.UIComponent):
             self.color = self.hover_color
             if pygame.mouse.get_pressed()[0]:
                 self.pressed = True
-                self.color = colors.GREEN
+                self.color = COLORS.GREEN
             else:
                 if self.pressed == True:
-                    #self.connect()
-                    try:
-                        self.connect()
-                    except Exception as e:
-                        print(f"Error calling function from ui component: {e}")
-                    self.pressed = False
+                    self.connect()
         else:
             self.color = self.normal_color

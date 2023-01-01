@@ -3,7 +3,7 @@ from scenes.scene import Scene
 from scenes import title_scene,option_scene, game_scene
 
 import pygame
-from assets import colors
+from assets.ressources import COLORS, FONT
 pygame.init()
 from ui import button, label
 
@@ -11,7 +11,7 @@ class MenueScene(Scene):
 
     def __init__(self):
         Scene.__init__(self)
-        self.font = pygame.font.Font(None, 30)
+        self.font = FONT.pixel_font(30)
 
         self.menu_start_x, self.menu_start_y = 10,100
 
@@ -22,7 +22,7 @@ class MenueScene(Scene):
         self.b_options.connect = self.switch_to_options
         self.b_quit.connect = self.switch_to_slpash
 
-        self.title_label = label.Label(pygame.display.get_surface(), 'Menue',40,colors.WHITE, (self.menu_start_x, self.menu_start_y-80), (0, 0))
+        self.title_label = label.Label(pygame.display.get_surface(), 'Menue',40,COLORS.WHITE, (self.menu_start_x, self.menu_start_y-80), (0, 0))
 
         self.ui_components = []
         self.ui_components.append(self.b_start)
@@ -48,6 +48,6 @@ class MenueScene(Scene):
             c.check_click()
 
     def render(self, screen):
-        screen.fill(colors.BLACK)
+        screen.fill(COLORS.BLACK)
         for c in self.ui_components:
             c.draw()

@@ -1,7 +1,7 @@
 import scenes.menu_scene
 from scenes.scene import Scene
 import pygame
-from assets import colors
+from assets import ressources
 pygame.init()
 
 
