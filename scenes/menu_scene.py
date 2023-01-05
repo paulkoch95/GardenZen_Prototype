@@ -43,7 +43,7 @@ class MenueScene(Scene):
     def input(self,event):
         pass
 
-    def update(self):
+    def update(self, dt = 1):
         for c in self.ui_components:
             c.check_click()
 

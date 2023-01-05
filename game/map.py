@@ -22,16 +22,26 @@ class Map(pygame.sprite.Sprite):
             [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
         ]
         self.width, self.height = len(self.map_data)*self.TILE_HEIGHT, len(self.map_data[0])*self.TILE_WIDTH
-        self.render_context = pygame.Surface((self.width, self.height), pygame.SRCALPHA)
 
         self.tiles = Tilemap()
         self.ground_tile = self.tiles.ground_tile
         self.rock_tile = self.tiles.rock_texture
+        self.map_texture = self.tiles.map_texture
 
-        self.generate_map()
+        # self.generate_map()
+        self.render_context = pygame.Surface(self.map_texture.get_size(), pygame.SRCALPHA)
+        self.render_context.blit(self.map_texture, (0,0))
 
         self.image = self.render_context
         self.rect = self.image.get_rect(topleft=(0,0))
+
+    def simple_map_generation(self):
+        map = []
+        width, height = 30, 20
+        for x in range(width):
+            for y in range(height):
+                pass
+
 
     def generate_map(self):
         for y, y_val in enumerate(self.map_data):

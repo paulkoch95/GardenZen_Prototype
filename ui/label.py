@@ -1,6 +1,6 @@
 import pygame
 pygame.init()
-from assets import ressources
+from assets.ressources import COLORS, FONT
 from ui import ui_component
 
 class Label(ui_component.UIComponent):
@@ -13,19 +13,20 @@ class Label(ui_component.UIComponent):
         self.font_size = font_size
         self.text_color = text_color
 
-        self.pos = pos
-        self.dim = dim
+        self.pos = pygame.Vector2(pos)
+        self.dim = pygame.Vector2(dim)
+
         # button text to be displayed
         self.text = text
 
         self.background_rect = pygame.Rect(pos,dim)
 
         # color speci for button
-        self.normal_color = ressources.COLORS.WHITE
+        self.normal_color = COLORS.WHITE
         self.color = self.normal_color
 
         # representation of text rendering to be displayed on top of button
-        self.font = pygame.font.Font(None, self.font_size)
+        self.font = FONT.pixel_font(self.font_size)
         self.text_surface = self.font.render(self.text,True, self.text_color)
         if self.text_surface.get_width() < self.dim[0]:
             self.background_rect.width = self.background_rect.width+self.text_surface.get_width()

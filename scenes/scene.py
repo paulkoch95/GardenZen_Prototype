@@ -9,7 +9,7 @@ class Scene:
     def render(self, screen):
         pass
 
-    def update(self):
+    def update(self, dt):
         pass
 
     def switchScene(self, scene):

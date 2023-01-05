@@ -10,8 +10,8 @@ class Button(ui_component.UIComponent):
         # own render context
         self.surface = surface
 
-        self.pos = pos
-        self.dim = dim
+        self.pos = pygame.Vector2(pos)
+        self.dim = pygame.Vector2(dim)
         # button text to be displayed
         self.text = text
         # functiont to be called upon clicking the button

@@ -41,12 +41,11 @@ def game(width, height, init_scene: scene.Scene, fps_cap):
                     active_scene = title_scene.SplashScreen()
 
         active_scene.input(filtered_events)
-        active_scene.update()
+        active_scene.update(clock.get_time())
         active_scene.render(screen)
         active_scene = active_scene.next
         fps = font.render(str(int(clock.get_fps())), True, pygame.Color('white'))
         screen.blit(fps, (50, 50))
-
         clock.tick(60)
         pygame.display.flip()
 
