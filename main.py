@@ -50,4 +50,5 @@ def game(width, height, init_scene: scene.Scene, fps_cap):
         pygame.display.flip()
 
 game(1000, 800, menu_scene.MenueScene, 120)
+
 # game(1000,800, title_scene.SplashScreen, 60)

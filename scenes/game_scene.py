@@ -1,8 +1,9 @@
 from scenes.scene import Scene
 import pygame
 from assets.ressources import COLORS, FONT
-from ui.label import Label
-from ui.widget_group import WidgetGroup
+from UI.label import Label
+from UI.widget_group import WidgetGroup
+from UI.UserInterface import UserInterface
 from game.map import Map
 from game.player import Player
 from game.camera import ScrollingCamera
@@ -16,10 +17,11 @@ class GameScreen(Scene):
 
     def __init__(self):
         Scene.__init__(self)
+        # initial offset for camera
         self.x_m, self.y_m = 0, 0
         self.scaling_factor = 1
 
-        # player object
+        self.user_interface = UserInterface()
         self.camera = ScrollingCamera()
 
         self.collectable_group = pygame.sprite.Group()
@@ -37,10 +39,10 @@ class GameScreen(Scene):
 
         #text display for debugging
         self.wg = WidgetGroup()
-        self.wg.add_widget("title", Label(pygame.display.get_surface(),'Game Scene',45,COLORS.WHITE,(0,0),(0,0)))
-        self.wg.add_widget("debug_fps", Label(pygame.display.get_surface(), 'Debug:', 30, COLORS.WHITE, (0, 70), (0, 0)))
-        self.wg.add_widget("debug_stats", Label(pygame.display.get_surface(), 'Debug:', 30, COLORS.WHITE, (0, 110), (0, 0)))
-        self.wg.add_widget("player_inventory", Label(pygame.display.get_surface(), 'Debug:', 30, COLORS.BLUE, (0, 140), (0, 0)))
+        self.wg.add_widget("title", Label(self.user_interface,'Game Scene',45,COLORS.BLACK, COLORS.WHITE,(0,0)))
+        self.wg.add_widget("debug_fps", Label(self.user_interface, 'Debug:', 30, COLORS.BLACK, COLORS.WHITE, (0, 70)))
+        self.wg.add_widget("debug_stats", Label(self.user_interface, 'Debug:', 30, COLORS.BLACK, COLORS.WHITE, (0, 110)))
+        self.wg.add_widget("player_inventory", Label(self.user_interface, 'Debug:', 30, COLORS.BLACK, COLORS.WHITE, (0, 140)))
         self.mouse_position = pygame.Vector2()
 
     def update(self, dt):
@@ -61,6 +63,8 @@ class GameScreen(Scene):
         self.camera.input()
         self.camera.update()
 
+        self.user_interface.input(event)
+
         self.wg.widgets.get('debug_stats').set_text(
             f'Mouse Position Screen: {str(pygame.mouse.get_pos())}| Player Tile: {self.player.get_tile_referenced_position()}| {self.collectable_group.sprites()}'
         )
@@ -71,6 +75,7 @@ class GameScreen(Scene):
         # game rendering
         self.camera.render_context()
         # interface rendering
-        self.wg.render()
+        self.user_interface.render()
+        # self.wg.render()
 
 

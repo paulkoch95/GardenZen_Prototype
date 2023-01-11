@@ -1,11 +1,10 @@
-import ui.ui_component
 from scenes.scene import Scene
 from scenes import title_scene,option_scene, game_scene
 
-import pygame
 from assets.ressources import COLORS, FONT
-pygame.init()
-from ui import button, label
+from UI.UserInterface import UserInterface
+from UI.button import Button
+from UI.label import Label
 
 class MenueScene(Scene):
 
@@ -13,23 +12,17 @@ class MenueScene(Scene):
         Scene.__init__(self)
         self.font = FONT.pixel_font(30)
 
-        self.menu_start_x, self.menu_start_y = 10,100
+        self.menu_start_x, self.menu_start_y = 10, 100
 
-        self.b_start = button.Button(pygame.display.get_surface(),'Start',(self.menu_start_x,self.menu_start_y),(100,50))
-        self.b_options = button.Button(pygame.display.get_surface(),'Options',(self.menu_start_x,self.menu_start_y+60),(100,50))
-        self.b_quit = button.Button(pygame.display.get_surface(),'Quit',(self.menu_start_x,self.menu_start_y+120),(100,50))
+        self.user_interface = UserInterface()
+
+        self.b_start = Button(self.user_interface, 'Start', (self.menu_start_x, self.menu_start_y), (100, 50))
+        self.b_options = Button(self.user_interface, 'Options', (self.menu_start_x, self.menu_start_y + 60), (100, 50))
+        self.b_quit = Button(self.user_interface,'Quit',(self.menu_start_x,self.menu_start_y+120),(100,50))
+        self._label = Label(self.user_interface, "Hallo Welt", 24, COLORS.BLACK,COLORS.WHITE, (200,200))
         self.b_start.connect = self.switch_to_game
         self.b_options.connect = self.switch_to_options
         self.b_quit.connect = self.switch_to_slpash
-
-        self.title_label = label.Label(pygame.display.get_surface(), 'Menue',40,COLORS.WHITE, (self.menu_start_x, self.menu_start_y-80), (0, 0))
-
-        self.ui_components = []
-        self.ui_components.append(self.b_start)
-        self.ui_components.append(self.b_options)
-        self.ui_components.append(self.b_quit)
-        self.ui_components.append(self.title_label)
-        # self.
 
     def switch_to_slpash(self):
         self.next = title_scene.SplashScreen()
@@ -41,13 +34,13 @@ class MenueScene(Scene):
         self.next = game_scene.GameScreen()
 
     def input(self,event):
-        pass
+        self.user_interface.input(event)
 
     def update(self, dt = 1):
-        for c in self.ui_components:
-            c.check_click()
+        pass
+        # for c in self.ui_components:
+        #     c.check_click()
 
     def render(self, screen):
         screen.fill(COLORS.BLACK)
-        for c in self.ui_components:
-            c.draw()
+        self.user_interface.render()
